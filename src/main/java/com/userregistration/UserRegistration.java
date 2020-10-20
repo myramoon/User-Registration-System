@@ -6,10 +6,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserRegistration {
-    private String firstName;
     private static final String REGEX_NAME = "^[A-Z]{1}[a-z]{2,}$";
     private static final String REGEX_EMAIL = "^[A-Za-z0-9]+([-\\.\\+\\_]{1}[0-9A-Za-z]+)*@[A-Za-z0-9]+.[a-zA-Z]{2,4}([\\.\\,]{1}[a-z]{2,3}){0,1}$";
     private static final String REGEX_PASSWORD = "^(?=.*[A-Z](?=.*\\d))(?=.*[\\@\\$\\!\\%\\*\\?\\&])[A-Za-z\\d\\@\\$\\!\\%\\*\\?\\&]{8,}$";
+    private static final String REGEX_PHONENUMBER = "^([1-9][0-9]){1}[1-9]{1}[0-9]{9}$";
 
     /* method to validate first name */
     public boolean validateFirstName(String firstName) {
@@ -32,6 +32,11 @@ public class UserRegistration {
     public boolean validatePassword(String password) {
         Pattern pattern = Pattern.compile(REGEX_PASSWORD);
         return pattern.matcher(password).matches();
+    }
+    /* method to validate phone number */
+    public boolean validatePhoneNumber(String phoneNum) {
+        Pattern pattern = Pattern.compile(REGEX_PHONENUMBER);
+        return pattern.matcher(phoneNum).matches();
     }
 
 
