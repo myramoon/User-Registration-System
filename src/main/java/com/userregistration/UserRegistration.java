@@ -1,6 +1,6 @@
 package com.userregistration;
 
-/* Purpose: Validate last name of user */
+/* Purpose: Validate password */
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
