@@ -5,24 +5,26 @@ import org.junit.Test;
 public class UserRegistrationTest {
 
     @Test
-    public void givenFirstName_WhenProper_ShouldReturnTrue() {
+    public void givenLastName_WhenProper_ShouldReturnTrue() {
         UserRegistration validator = new UserRegistration();
-        boolean result = validator.validateFirstName("Anam");
+        boolean result = validator.validateLastName("Anam");
         Assert.assertTrue(result);
     }
 
     @Test
-    public void givenFirstName_WhenShort_ShouldReturnFalse() {
+    public void givenLastName_WhenShort_ShouldReturnFalse() {
         UserRegistration validator = new UserRegistration();
-        boolean result = validator.validateFirstName("An");
+        boolean result = validator.validateLastName("An");
         Assert.assertFalse(result);
     }
 
     @Test
-    public void givenFirstName_WhenStartingWithLowerCase_ShouldReturnFalse() {
+    public void givenLastName_WhenStartingWithLowerCase_ShouldReturnFalse() {
         UserRegistration validator = new UserRegistration();
-        boolean result = validator.validateFirstName("anam");
+        boolean result = validator.validateLastName("anam");
         Assert.assertFalse(result);
     }
+
+
 }
 
