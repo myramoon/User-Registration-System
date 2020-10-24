@@ -1,19 +1,19 @@
 package com.userregistration;
+
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 import java.util.Collection;
 @RunWith(Parameterized.class)
-public class ValidateEmailTest {
+public class UserRegistrationEmailTest {
     private String emailTest;
-    private boolean expectedResult;
 
-    public ValidateEmailTest(String email , boolean expectedResult) {
+    public UserRegistrationEmailTest(String email , boolean expectedResult) {
         this.emailTest = email;
-        this.expectedResult =expectedResult;
     }
 
     @Parameterized.Parameters
@@ -39,16 +39,21 @@ public class ValidateEmailTest {
                 {"abc.@gmail.com", false},
                 {"abc@abc@gmail.com", false},
                 {"abc@gmail.com.1a", false},
-                {"abc@gmail.com.aa.au", false}
+                {"abc@gmail.com.aa.au", true}
         });
 
     }
 
     @Test
-    public void givenEmail_ShouldReturnAsPerParameterizedResult() {
-        UserRegistration validator = new UserRegistration();
-        boolean result = validator.validateEmail(this.emailTest);
-        Assert.assertEquals(this.expectedResult , result);
-    }
+    public void givenEmail_WhenNotProper_ShouldThrowException() {
+        UserRegistration validator = new UserRegistration(this.emailTest);
+        try {
+            ExpectedException exceptionRule = ExpectedException.none();
+            exceptionRule.expect(UserInputException.class);
+            validator.validateEmail();
+        } catch (UserInputException e) {
+            Assert.assertEquals(UserInputException.exceptionType.ENTERED_IMPROPER , e.type);
+        }
 
+    }
 }
