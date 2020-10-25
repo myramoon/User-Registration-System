@@ -1,21 +1,22 @@
 package com.userregistration;
-
+import java.util.Arrays;
+import java.util.Collection;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.Arrays;
-import java.util.Collection;
 @RunWith(Parameterized.class)
 public class UserRegistrationEmailTest {
     private String emailTest;
+    private boolean expectedResult;
 
     public UserRegistrationEmailTest(String email , boolean expectedResult) {
         this.emailTest = email;
+        this.expectedResult = expectedResult;
     }
 
+    @SuppressWarnings("rawtypes")
     @Parameterized.Parameters
     public static Collection data() {
         return Arrays.asList(new Object[][]{ {"abc@yahoo.com", true},
@@ -43,17 +44,13 @@ public class UserRegistrationEmailTest {
         });
 
     }
-
     @Test
-    public void givenEmail_WhenNotProper_ShouldThrowException() {
-        UserRegistration validator = new UserRegistration(this.emailTest);
+    public void givenEmail_ShouldReturnAsPerParameterizedResult() throws Exception {
         try {
-            ExpectedException exceptionRule = ExpectedException.none();
-            exceptionRule.expect(UserInputException.class);
-            validator.validateEmail();
-        } catch (UserInputException e) {
-            Assert.assertEquals(UserInputException.exceptionType.ENTERED_IMPROPER , e.type);
+            UserRegistration userValidator = new UserRegistration();
+            userValidator.validateEmailId(this.emailTest);
+        }catch(UserInputException e) {
+            Assert.assertEquals("Please enter correct email" , e.getMessage());
         }
-
     }
 }

@@ -1,109 +1,77 @@
 package com.userregistration;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 public class UserRegistrationTest {
-    @Test
-    public void givenName_WhenProper_ShouldReturnTrue() {
-        UserRegistration validator = new UserRegistration("Anam");
-        try {
-            ExpectedException exceptionRule = ExpectedException.none();
-            exceptionRule.expect(UserInputException.class);
-            boolean result = validator.validateName();
-            Assert.assertTrue(result);
-        }  catch (UserInputException e) {
-            e.printStackTrace();
+
+        //Checking the validity of first name
+        @Test
+        public void givenFirstName_WhenProper_ReturnsTrue() throws Exception {
+            UserRegistration userValidator = new UserRegistration();
+            boolean result = userValidator.validateName("Anam");
+            Assert.assertEquals(true, result);
         }
-    }
-
-    @Test
-    public void givenName_WhenStartingWithLowerCase_ShouldThrowException() {
-        UserRegistration validator = new UserRegistration("anam");
-        try {
-            ExpectedException exceptionRule = ExpectedException.none();
-            exceptionRule.expect(UserInputException.class);
-            validator.validateName();
-
-        }  catch (UserInputException e) {
-            Assert.assertEquals(UserInputException.exceptionType.ENTERED_LOWERCASEBEGIN , e.type);
+        @Test
+        public void givenFirstName_WhenImproper_ThrowsException() throws Exception
+        {
+            try {
+                UserRegistration userValidator = new UserRegistration();
+                userValidator.validateName("An");
+            }
+            catch(UserInputException e) {
+                Assert.assertEquals("Please enter proper first name", e.getMessage() );
+            }
         }
-    }
-
-    @Test
-    public void givenName_WhenShort_ShouldThrowException() {
-        UserRegistration validator = new UserRegistration("An");
-        try {
-            ExpectedException exceptionRule = ExpectedException.none();
-            exceptionRule.expect(UserInputException.class);
-            validator.validateName();
-
-        }  catch (UserInputException e) {
-            Assert.assertEquals(UserInputException.exceptionType.ENTERED_SHORT , e.type);
+        //Checking the validity of last name
+        @Test
+        public void givenLastName_WhenProper_ShouldReturnTrue() throws Exception {
+            UserRegistration userValidator = new UserRegistration();
+            boolean result = userValidator.validateName("Fazal");
+            Assert.assertEquals(true, result);
         }
-    }
-
-    @Test
-    public void givenName_WhenIncludingOtherCharacters_ShouldThrowException() {
-        UserRegistration validator = new UserRegistration("An4");
-        try {
-            ExpectedException exceptionRule = ExpectedException.none();
-            exceptionRule.expect(UserInputException.class);
-            validator.validateName();
-
-        }  catch (UserInputException e) {
-            Assert.assertEquals(UserInputException.exceptionType.ENTERED_OTHERCHARACTERS , e.type);
+        @Test
+        public void givenLastName_WhenImproper_ShouldThrowException() throws Exception {
+            try {
+                UserRegistration userValidator = new UserRegistration();
+                userValidator.validateName("Qwe");
+            }
+            catch(UserInputException e) {
+                Assert.assertEquals("Please enter proper last name", e.getMessage() );
+            }
         }
-    }
 
-    @Test
-    public void givenPhoneNumber_WhenProper_ShouldReturnTrue() {
-        UserRegistration validator = new UserRegistration("91 8828297122");
-        try {
-            ExpectedException exceptionRule = ExpectedException.none();
-            exceptionRule.expect(UserInputException.class);
-            boolean result = validator.validatePhoneNumber();
-            Assert.assertTrue(result);
-        }  catch (UserInputException e) {
-            e.printStackTrace();
+        //Checking the validity of phone number
+        @Test
+        public void givenPhoneNumber_WhenValid_ShouldReturnTrue() throws Exception {
+            UserRegistration userValidator = new UserRegistration();
+            boolean result = userValidator.validateMobileNumber("91 9767576865");
+            Assert.assertEquals(true, result);
         }
-    }
 
-    @Test
-    public void givenPhoneNumber_WhenShort_ShouldThrowException() {
-        UserRegistration validator = new UserRegistration("91 68792316");
-        try {
-            ExpectedException exceptionRule = ExpectedException.none();
-            exceptionRule.expect(UserInputException.class);
-            validator.validatePhoneNumber();
-        }  catch (UserInputException e) {
-            Assert.assertEquals(UserInputException.exceptionType.ENTERED_SHORT , e.type);
+        @Test
+        public void givenPhoneNumber_WhenInvalid_ShouldThrowException() throws Exception {
+            try {
+                UserRegistration userValidator = new UserRegistration();
+                userValidator.validateMobileNumber("9869532");
+            }catch(UserInputException e) {
+                Assert.assertEquals("Please enter correct phone number", e.getMessage() );
+            }
         }
-    }
 
-    @Test
-    public void givenPhoneNumber_WhenNotHavingSpaceAfterCCode_ShouldThrowException() {
-        UserRegistration validator = new UserRegistration("912561328621");
-        try{
-            ExpectedException exceptionRule = ExpectedException.none();
-            exceptionRule.expect(UserInputException.class);
-            validator.validatePhoneNumber();
-        } catch (UserInputException e) {
-            Assert.assertEquals(UserInputException.exceptionType.NOTENTERED_SPACE , e.type);
+        //Check the validity of password
+        @Test
+        public void givenPassword_WhenValid_ShouldReturnTrue() throws Exception {
+            UserRegistration userValidator = new UserRegistration();
+            boolean result = userValidator.validatePassword("ASDsde986$");
+            Assert.assertEquals(true, result);
         }
-    }
-
-    @Test
-    public void givenPhoneNumber_WhenIncludingOtherCharacters_ShouldThrowException() {
-        UserRegistration validator = new UserRegistration("91 23143a8$33");
-        try {
-            ExpectedException exceptionRule = ExpectedException.none();
-            exceptionRule.expect(UserInputException.class);
-            validator.validatePhoneNumber();
-
-        }  catch (UserInputException e) {
-            Assert.assertEquals(UserInputException.exceptionType.ENTERED_OTHERCHARACTERS , e.type);
+        @Test
+        public void givenPassword_WhenInvalid_ShouldThrowException() throws Exception {
+            try {
+                UserRegistration userValidator = new UserRegistration();
+                userValidator.validatePassword("hgjui");
+            }catch(UserInputException e) {
+                Assert.assertEquals("Please enter correct password", e.getMessage() );
+            }
         }
-    }
 }
